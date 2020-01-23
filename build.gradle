@@ -3,8 +3,8 @@ apply plugin: 'java'
 group = pluginGroup
 version = pluginVersion
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -18,10 +18,25 @@ repositories {
     }
 }
 
+configurations {
+    extraLibs
+    testCompile.extendsFrom compileOnly
+}
+
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly 'com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
+    extraLibs group: 'com.google.inject', name: 'guice', version: '4.2.2'
 }
+
+jar {
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
@@ -30,3 +45,12 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
+
+tasks.register("moveToServerFolder") {
+    doLast {
+        pathToServer = project.hasProperty('pathToServer') ? project.property('pathToServer') : 'nosuchgroup'
+        print "Plugin location: " + pathToServer + "/plugins/" + project.name + "-" + version + ".jar"
+        ant.move(file: buildDir.getAbsolutePath() + "/libs/" + project.name + "-" + version + ".jar", tofile: pathToServer + "/plugins/" + project.name + "-" + version + ".jar")
+    }
+}
+
