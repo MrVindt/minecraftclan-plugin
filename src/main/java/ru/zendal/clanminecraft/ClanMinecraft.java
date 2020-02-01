@@ -43,7 +43,7 @@ public final class ClanMinecraft extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getCommand("test").setExecutor(this.injector.getInstance(CommandTest.class));
+        this.getCommand("clan").setExecutor(this.injector.getInstance(CommandTest.class));
     }
 
     @Override
