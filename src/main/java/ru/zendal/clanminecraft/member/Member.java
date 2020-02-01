@@ -5,6 +5,6 @@ import org.bukkit.entity.Player;
 public class Member {
 
     private Player player;
-    private String[] role;
+    private RoleMember role;
 
 }
