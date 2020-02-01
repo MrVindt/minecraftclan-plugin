@@ -3,6 +3,6 @@ version: @version@
 main: ru.zendal.clanminecraft.ClanMinecraft
 api-version: 1.13
 commands:
-  test:
-    description: Test description
-    usage: /test....
+  clan:
+    description: create clan
+    usage: command execution error

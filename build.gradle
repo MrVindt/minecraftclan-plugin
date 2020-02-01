@@ -30,6 +30,7 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
     extraLibs group: 'com.google.inject', name: 'guice', version: '4.2.2'
     configurations.compile.extendsFrom(configurations.extraLibs)
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
 }
 
 jar {
