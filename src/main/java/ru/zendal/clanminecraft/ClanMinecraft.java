@@ -6,7 +6,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import ru.zendal.clanminecraft.command.CommandTest;
+import ru.zendal.clanminecraft.component.i18n.Test;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
+import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
 
 import java.io.File;
 
@@ -43,6 +45,7 @@ public final class ClanMinecraft extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.injector.getInstance(Test.class);
         this.getCommand("clan").setExecutor(this.injector.getInstance(CommandTest.class));
     }
 
@@ -57,6 +60,9 @@ public final class ClanMinecraft extends JavaPlugin {
      * @return instance of injector
      */
     private Injector createDefaultInjector() {
-        return Guice.createInjector(new GuiceConfiguration(this));
+        return Guice.createInjector(
+                new GuiceConfiguration(this),
+                new LanguageConfiguration(this, "ru_ru", "en_us")
+        );
     }
 }
