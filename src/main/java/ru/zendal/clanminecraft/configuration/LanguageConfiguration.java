@@ -4,11 +4,12 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
+import ru.zendal.clanminecraft.component.i18n.PluginLocalizationImpl;
 import ru.zendal.clanminecraft.utils.PropertiesFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LanguageConfiguration extends AbstractModule {
 
@@ -21,15 +22,15 @@ public class LanguageConfiguration extends AbstractModule {
         this.availableLocales = locales;
     }
 
+    @Override
+    protected void configure() {
+        bind(PluginLocalization.class).to(PluginLocalizationImpl.class);
+    }
 
     @Provides
-    @Named("languageFiles")
-    public List<PropertiesFile> propertiesProvider() throws IOException {
-        var result = new ArrayList<PropertiesFile>();
-        for (String locale : availableLocales) {
-            result.add(new PropertiesFile(javaPlugin.getResource("lang/" + locale + ".properties")));
-        }
-        return result;
+    @Named("languageFile")
+    public PropertiesFile propertiesProvider() throws IOException {
+        return new PropertiesFile(javaPlugin.getResource("lang/" + "en_us" + ".properties"));
     }
 
 
