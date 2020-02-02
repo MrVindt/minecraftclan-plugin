@@ -5,11 +5,19 @@ import com.google.inject.name.Named;
 import ru.zendal.clanminecraft.component.i18n.command.CommandLocalization;
 import ru.zendal.clanminecraft.utils.PropertiesFile;
 
-
+/**
+ * Simple implements of plugin localization
+ */
 public class PluginLocalizationImpl implements PluginLocalization {
 
+    /**
+     * Source of localization
+     */
     private final PropertiesFile languagePropertiesFile;
 
+    /**
+     * Command localization instance
+     */
     private final CommandLocalization commandLocalization;
 
     @Inject
@@ -18,12 +26,17 @@ public class PluginLocalizationImpl implements PluginLocalization {
         this.commandLocalization = this.initializeLocalization();
     }
 
-
+    /**
+     * Create command localization
+     *
+     * @return instance of command localization
+     */
     private CommandLocalization initializeLocalization() {
         return new CommandLocalization() {
             @Override
-            public String getOnClanCreateSuccess() {
-                return languagePropertiesFile.get("command.clan.create.successful");
+            public String getOnClanCreateSuccess(String nameClan) {
+                return languagePropertiesFile.get("command.clan.create.successful")
+                        .replaceAll("\\{CLAN_NAME}", nameClan);
             }
         };
     }

@@ -23,7 +23,7 @@ public class CommandTest implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 2 && args[1].length() >= 3 && args[1].length() <= 20) {
             if (command.getName().equalsIgnoreCase("clan") && args[0].equalsIgnoreCase("create")) {
-                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess());
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess(args[1]));
                 Clan clan = Clan.builder().name(args[1]).build();
                 var player = sender instanceof Player ? ((Player) sender) : null;
                 player.getLocation().getChunk();

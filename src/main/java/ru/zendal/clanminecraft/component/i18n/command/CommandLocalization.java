@@ -1,6 +1,14 @@
 package ru.zendal.clanminecraft.component.i18n.command;
 
+/**
+ * Localization of command
+ */
 public interface CommandLocalization {
 
-    String getOnClanCreateSuccess();
+    /**
+     * Get message about successful created clan
+     *
+     * @return locale message
+     */
+    String getOnClanCreateSuccess(String nameClan);
 }

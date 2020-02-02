@@ -25,7 +25,6 @@ public class GuiceConfiguration extends AbstractModule {
         this.javaPlugin = javaPlugin;
     }
 
-
     @Provides
     public JavaPlugin javaPluginProvider() {
         return this.javaPlugin;
