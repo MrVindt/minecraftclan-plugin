@@ -9,12 +9,21 @@ import ru.zendal.clanminecraft.component.i18n.PluginLocalizationImpl;
 import ru.zendal.clanminecraft.utils.PropertiesFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+/**
+ * Guice configuration about language (locale) plugin
+ * TODO Add support config.yml
+ */
 public class LanguageConfiguration extends AbstractModule {
 
+    /**
+     * Instance of java plugin
+     */
     private final JavaPlugin javaPlugin;
 
+    /**
+     * Available locales
+     */
     private final String[] availableLocales;
 
     public LanguageConfiguration(JavaPlugin javaPlugin, String... locales) {
