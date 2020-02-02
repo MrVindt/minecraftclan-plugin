@@ -3,6 +3,8 @@ package ru.zendal.clanminecraft.configuration;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.zendal.clanminecraft.сlan.ClanManager;
+import ru.zendal.clanminecraft.сlan.ClanManagerMemory;
 import ru.zendal.clanminecraft.component.logger.SimplePluginLoggerImpl;
 import ru.zendal.clanminecraft.component.logger.PluginLogger;
 
@@ -23,6 +25,11 @@ public class GuiceConfiguration extends AbstractModule {
      */
     public GuiceConfiguration(JavaPlugin javaPlugin) {
         this.javaPlugin = javaPlugin;
+    }
+
+    @Override
+    protected void configure() {
+        bind(ClanManager.class).to(ClanManagerMemory.class);
     }
 
     @Provides

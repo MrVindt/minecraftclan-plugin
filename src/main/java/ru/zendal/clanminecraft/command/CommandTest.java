@@ -7,16 +7,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
 import ru.zendal.clanminecraft.сlan.Clan;
+import ru.zendal.clanminecraft.сlan.ClanManager;
+
 
 public class CommandTest implements CommandExecutor {
 
-
+    private final ClanManager clanManager;
     private final PluginLocalization pluginLocalization;
 
 
     @Inject
-    public CommandTest(PluginLocalization pluginLocalization) {
+    public CommandTest(PluginLocalization pluginLocalization, ClanManager clanManager) {
         this.pluginLocalization = pluginLocalization;
+        this.clanManager = clanManager;
     }
 
     @Override
@@ -24,9 +27,10 @@ public class CommandTest implements CommandExecutor {
         if (args.length == 2 && args[1].length() >= 3 && args[1].length() <= 20) {
             if (command.getName().equalsIgnoreCase("clan") && args[0].equalsIgnoreCase("create")) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess(args[1]));
-                Clan clan = Clan.builder().name(args[1]).build();
                 var player = sender instanceof Player ? ((Player) sender) : null;
-                player.getLocation().getChunk();
+                var chunk = player.getLocation().getChunk();
+
+                clanManager.create(args[1], chunk, player);
                 return true;
             }
         }
