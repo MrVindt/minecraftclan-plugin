@@ -24,7 +24,7 @@ public class ClanManagerMemory implements ClanManager {
     @Override
     public void create(String nameClan, Chunk mainChunk, Player player) {
         Clan clan = Clan.builder().name(nameClan).mainChunk(mainChunk).memberList(
-                Collections.singletonList(
+                List.of(
                         Member.builder().role(RoleMember.ADMIN).player(player).build()
                 )
         ).build();
