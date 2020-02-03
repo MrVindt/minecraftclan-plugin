@@ -44,7 +44,12 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
             @Override
             public String getOnClanCreateNameClanError(){
-                return languagePropertiesFile.get(("command.clan.create.nameClan.error"));
+                return languagePropertiesFile.get("command.clan.create.error.nameClan");
+            }
+            @Override
+            public String getOnClanCreateNameClanIsExist(String nameClan){
+                return languagePropertiesFile.get("command.clan.create.error.nameClanIsExist")
+                        .replaceAll("\\{CLAN_NAME", nameClan);
             }
         };
     }

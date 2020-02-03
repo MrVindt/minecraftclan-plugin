@@ -13,4 +13,5 @@ public interface CommandLocalization {
     String getOnClanCreateSuccess(String nameClan);
     String getOnClanCreateError();
     String getOnClanCreateNameClanError();
+    String getOnClanCreateNameClanIsExist(String nameClan);
 }
