@@ -11,7 +11,10 @@ public interface CommandLocalization {
      * @return locale message
      */
     String getOnClanCreateSuccess(String nameClan);
+
     String getOnClanCreateError();
+
     String getOnClanCreateNameClanError();
+
     String getOnClanCreateNameClanIsExist(String nameClan);
 }

@@ -27,5 +27,6 @@ public interface ClanManager {
      * @return List of Clans
      */
     List<Clan> getAllClans();
+
     List<String> getAllNameClans();
 }

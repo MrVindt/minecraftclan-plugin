@@ -37,7 +37,7 @@ public class ClanManagerMemory implements ClanManager {
     }
 
     @Override
-    public List<String> getAllNameClans(){
+    public List<String> getAllNameClans() {
         return this.listNameClans;
     }
 }
