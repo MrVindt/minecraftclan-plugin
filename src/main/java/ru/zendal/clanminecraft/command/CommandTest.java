@@ -33,9 +33,8 @@ public class CommandTest implements CommandExecutor {
                 return true;
             }
         }
-        sender.sendMessage("Clan create with command: clan create NameClan");
-        sender.sendMessage("NameClan must be between 3 and 20 characters");
-        //System.out.println(clan.getName());
+        sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateError());
+        sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanError());
         return false;
     }
 }

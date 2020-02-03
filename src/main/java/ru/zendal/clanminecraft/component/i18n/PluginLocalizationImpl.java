@@ -38,6 +38,14 @@ public class PluginLocalizationImpl implements PluginLocalization {
                 return languagePropertiesFile.get("command.clan.create.successful")
                         .replaceAll("\\{CLAN_NAME}", nameClan);
             }
+            @Override
+            public String getOnClanCreateError(){
+                return languagePropertiesFile.get("command.clan.create.error");
+            }
+            @Override
+            public String getOnClanCreateNameClanError(){
+                return languagePropertiesFile.get(("command.clan.create.nameClan.error"));
+            }
         };
     }
 
