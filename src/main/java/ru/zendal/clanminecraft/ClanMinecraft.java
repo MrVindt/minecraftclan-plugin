@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import ru.zendal.clanminecraft.command.CommandTest;
+import ru.zendal.clanminecraft.command.CommandClan;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
 
@@ -44,7 +44,7 @@ public final class ClanMinecraft extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getCommand("clan").setExecutor(this.injector.getInstance(CommandTest.class));
+        this.getCommand("clan").setExecutor(this.injector.getInstance(CommandClan.class));
     }
 
     @Override

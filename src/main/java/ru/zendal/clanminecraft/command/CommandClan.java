@@ -9,14 +9,14 @@ import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
 import ru.zendal.clanminecraft.сlan.ClanManager;
 
 
-public class CommandTest implements CommandExecutor {
+public class CommandClan implements CommandExecutor {
 
     private final ClanManager clanManager;
     private final PluginLocalization pluginLocalization;
 
 
     @Inject
-    public CommandTest(PluginLocalization pluginLocalization, ClanManager clanManager) {
+    public CommandClan(PluginLocalization pluginLocalization, ClanManager clanManager) {
         this.pluginLocalization = pluginLocalization;
         this.clanManager = clanManager;
     }
