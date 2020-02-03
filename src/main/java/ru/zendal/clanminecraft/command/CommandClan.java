@@ -6,7 +6,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
+import ru.zendal.clanminecraft.сlan.Clan;
 import ru.zendal.clanminecraft.сlan.ClanManager;
+
+import java.util.stream.Collectors;
 
 
 public class CommandClan implements CommandExecutor {
@@ -28,8 +31,8 @@ public class CommandClan implements CommandExecutor {
 
                 var player = sender instanceof Player ? ((Player) sender) : null;
                 var chunk = player.getLocation().getChunk();
-                var allClans = clanManager.getAllNameClans();
-                if (allClans.contains(args[1]))
+                var allClanNames = clanManager.getAllClans().stream().map(Clan::getName).collect(Collectors.toList());
+                if (allClanNames.contains(args[1]))
                     sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanIsExist(args[1]));
                 else {
                     clanManager.create(args[1], chunk, player);
