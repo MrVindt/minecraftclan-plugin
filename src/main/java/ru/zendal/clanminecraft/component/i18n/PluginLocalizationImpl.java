@@ -54,6 +54,11 @@ public class PluginLocalizationImpl implements PluginLocalization {
                 return languagePropertiesFile.get("command.clan.create.error.nameClanIsExist")
                         .replaceAll("\\{CLAN_NAME", nameClan);
             }
+
+            @Override
+            public String getOnClanCreateErrorChunkIsBusy(){
+                return languagePropertiesFile.get("command.clan.create.error.chunkIsBusy");
+            }
         };
     }
 

@@ -5,8 +5,4 @@ public class IllegalNameClanException extends IllegalArgumentException implement
     public IllegalNameClanException(String message) {
         super(message);
     }
-
-    public IllegalNameClanException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
