@@ -12,11 +12,32 @@ public interface CommandLocalization {
      */
     String getOnClanCreateSuccess(String nameClan);
 
+    /**
+     * Get message about incorrectly entered command
+     *
+     * @return local message
+     */
     String getOnClanCreateError();
 
+    /**
+     * Get message about incorrectly entered сlan name
+     *
+     * @return local message
+     */
     String getOnClanCreateNameClanError();
 
+    /**
+     * Get message about name clan is exist
+     *
+     * @param nameClan clan name
+     * @return local message
+     */
     String getOnClanCreateNameClanIsExist(String nameClan);
 
+    /**
+     * Get message about the area is occupied by another clan
+     *
+     * @return local message
+     */
     String getOnClanCreateErrorChunkIsBusy();
 }
