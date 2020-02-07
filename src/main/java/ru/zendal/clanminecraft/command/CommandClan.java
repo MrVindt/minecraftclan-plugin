@@ -6,14 +6,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
-import ru.zendal.clanminecraft.сlan.Clan;
 import ru.zendal.clanminecraft.сlan.ClanManager;
-import ru.zendal.clanminecraft.сlan.Member;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;
-
-import java.util.stream.Collectors;
 
 
 public class CommandClan implements CommandExecutor {
@@ -39,9 +35,9 @@ public class CommandClan implements CommandExecutor {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess(args[1]));
             } catch (IllegalNameClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanError());
-            } catch (IllegalNameClanIsExistException e){
+            } catch (IllegalNameClanIsExistException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanIsExist(args[1]));
-            } catch (IllegalChunkClanException e){
+            } catch (IllegalChunkClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorChunkIsBusy());
             }
             return true;

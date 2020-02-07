@@ -8,6 +8,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import ru.zendal.clanminecraft.сlan.ClanManager;
 
+/**
+ * Events of the player
+ */
 public class Event implements Listener {
 
     public final ClanManager clanManager;
@@ -34,7 +37,8 @@ public class Event implements Listener {
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk() == chunkNow);
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
                 clan.getMemberList().stream().anyMatch(member -> member.getPlayer() == player));
-        if (chunkInClan == true && playerInClan == true || chunkInClan == false && playerInClan == true || chunkInClan == false && playerInClan == false)
+        if (chunkInClan == true && playerInClan == true || chunkInClan == false && playerInClan == true ||
+                chunkInClan == false && playerInClan == false)
             return true;
         else
             return false;
