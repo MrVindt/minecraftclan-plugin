@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
 import ru.zendal.clanminecraft.сlan.Clan;
 import ru.zendal.clanminecraft.сlan.ClanManager;
+import ru.zendal.clanminecraft.сlan.Member;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;

@@ -1,11 +1,11 @@
 package ru.zendal.clanminecraft.event;
 
 import com.google.inject.Inject;
-import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import ru.zendal.clanminecraft.сlan.ClanManager;
 
 public class Event implements Listener {
@@ -18,13 +18,25 @@ public class Event implements Listener {
     }
 
     @EventHandler
-    public void onBreakBlock(BlockBreakEvent blockBreakEvent){
-        if (getClanByChunk(blockBreakEvent.getPlayer()))
+    public void onBreakBlock(BlockBreakEvent blockBreakEvent) {
+        if (getResultOnEvent(blockBreakEvent.getPlayer()) == false)
             blockBreakEvent.setCancelled(true);
     }
 
-    boolean getClanByChunk(Player player){
+    @EventHandler
+    public void onPutBlock(BlockPlaceEvent blockPlaceEvent) {
+        if (getResultOnEvent(blockPlaceEvent.getPlayer()) == false)
+            blockPlaceEvent.setCancelled(true);
+    }
+
+    boolean getResultOnEvent(Player player) {
         var chunkNow = player.getLocation().getChunk();
-        return clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk() == chunkNow && clan.getMemberList().equals(player.getName()));
+        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk() == chunkNow);
+        var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
+                clan.getMemberList().stream().anyMatch(member -> member.getPlayer() == player));
+        if (chunkInClan == true && playerInClan == true || chunkInClan == false && playerInClan == true || chunkInClan == false && playerInClan == false)
+            return true;
+        else
+            return false;
     }
 }
