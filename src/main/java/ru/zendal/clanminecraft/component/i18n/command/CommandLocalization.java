@@ -46,7 +46,7 @@ public interface CommandLocalization {
      *
      * @return local message
      */
-    String getOnClanCreateErrorPlayerIsAdminAnotherClan();
+    String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan);
 
     /**
      * Get message that you can't break blocks because you are not a member of a clan

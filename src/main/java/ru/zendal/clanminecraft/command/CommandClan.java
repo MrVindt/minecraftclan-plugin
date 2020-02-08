@@ -12,6 +12,9 @@ import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanException;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 
 public class CommandClan implements CommandExecutor {
 
@@ -41,8 +44,13 @@ public class CommandClan implements CommandExecutor {
             } catch (IllegalChunkClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorChunkIsBusy());
             } catch (IllegalPlayerAdminAnotherClanException e){
-                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorPlayerIsAdminAnotherClan());
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorPlayerIsAdminAnotherClan(
+                        clanManager.getAllClans().stream().filter(clan -> clan.getMemberList().stream().anyMatch(
+                                member -> member.getPlayer() == player.getPlayer())).map(clan -> clan.getName()).collect(
+                                Collectors.toList()).toString().replace("[","").replace("]","")
+                ));
             }
+
             return true;
 
         }

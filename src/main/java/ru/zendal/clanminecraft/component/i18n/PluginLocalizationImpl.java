@@ -61,8 +61,9 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
 
             @Override
-            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(){
-                return languagePropertiesFile.get("command.clan.create.error.playerIsAdminAnotherClan");
+            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan){
+                return languagePropertiesFile.get("command.clan.create.error.playerIsAdminAnotherClan")
+                        .replaceAll("\\{CLAN_NAME}", nameClan);
             }
 
             @Override
