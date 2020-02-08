@@ -56,8 +56,18 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
 
             @Override
-            public String getOnClanCreateErrorChunkIsBusy(){
+            public String getOnClanCreateErrorChunkIsBusy() {
                 return languagePropertiesFile.get("command.clan.create.error.chunkIsBusy");
+            }
+
+            @Override
+            public String getOnClanEventOnBreakBlockError() {
+                return languagePropertiesFile.get("clan.event.onBreakBlock.error");
+            }
+
+            @Override
+            public String getOnClanEventOnPutBlockError() {
+                return languagePropertiesFile.get("clan.event.onPutBlock.error");
             }
         };
     }

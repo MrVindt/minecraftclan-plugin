@@ -40,4 +40,18 @@ public interface CommandLocalization {
      * @return local message
      */
     String getOnClanCreateErrorChunkIsBusy();
+
+    /**
+     * Get message that you can't break blocks because you are not a member of a clan
+     *
+     * @return Local message
+     */
+    String getOnClanEventOnBreakBlockError();
+
+    /**
+     * Get message that you can't put blocks because you are not a member of a clan
+     *
+     * @return Local message
+     */
+    String getOnClanEventOnPutBlockError();
 }

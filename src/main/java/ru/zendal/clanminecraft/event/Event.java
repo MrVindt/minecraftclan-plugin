@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
 import ru.zendal.clanminecraft.сlan.ClanManager;
 
 /**
@@ -14,22 +15,28 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
 public class Event implements Listener {
 
     public final ClanManager clanManager;
+    public final PluginLocalization pluginLocalization;
 
     @Inject
-    public Event(ClanManager clanManager) {
+    public Event(ClanManager clanManager, PluginLocalization pluginLocalization) {
         this.clanManager = clanManager;
+        this.pluginLocalization = pluginLocalization;
     }
 
     @EventHandler
     public void onBreakBlock(BlockBreakEvent blockBreakEvent) {
-        if (getResultOnEvent(blockBreakEvent.getPlayer()) == false)
+        if (!getResultOnEvent(blockBreakEvent.getPlayer())) {
+            blockBreakEvent.getPlayer().sendMessage(pluginLocalization.getCommandLocale().getOnClanEventOnBreakBlockError());
             blockBreakEvent.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void onPutBlock(BlockPlaceEvent blockPlaceEvent) {
-        if (getResultOnEvent(blockPlaceEvent.getPlayer()) == false)
+        if (!getResultOnEvent(blockPlaceEvent.getPlayer())){
+            blockPlaceEvent.getPlayer().sendMessage(pluginLocalization.getCommandLocale().getOnClanEventOnPutBlockError());
             blockPlaceEvent.setCancelled(true);
+        }
     }
 
     boolean getResultOnEvent(Player player) {
@@ -37,8 +44,7 @@ public class Event implements Listener {
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk() == chunkNow);
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
                 clan.getMemberList().stream().anyMatch(member -> member.getPlayer() == player));
-        if (chunkInClan == true && playerInClan == true || chunkInClan == false && playerInClan == true ||
-                chunkInClan == false && playerInClan == false)
+        if (chunkInClan && playerInClan || !chunkInClan && playerInClan || !chunkInClan)
             return true;
         else
             return false;
