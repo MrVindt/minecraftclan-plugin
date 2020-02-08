@@ -10,6 +10,7 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;
+import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanException;
 
 
 public class CommandClan implements CommandExecutor {
@@ -39,6 +40,8 @@ public class CommandClan implements CommandExecutor {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanIsExist(args[1]));
             } catch (IllegalChunkClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorChunkIsBusy());
+            } catch (IllegalPlayerAdminAnotherClanException e){
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorPlayerIsAdminAnotherClan());
             }
             return true;
 
