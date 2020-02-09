@@ -12,13 +12,13 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
 /**
  * Events of the player
  */
-public class Event implements Listener {
+public class PlayerEvent implements Listener {
 
     public final ClanManager clanManager;
     public final PluginLocalization pluginLocalization;
 
     @Inject
-    public Event(ClanManager clanManager, PluginLocalization pluginLocalization) {
+    public PlayerEvent(ClanManager clanManager, PluginLocalization pluginLocalization) {
         this.clanManager = clanManager;
         this.pluginLocalization = pluginLocalization;
     }
@@ -44,7 +44,7 @@ public class Event implements Listener {
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ());
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
                 clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
-        if (chunkInClan && playerInClan || !chunkInClan && playerInClan || !chunkInClan) {
+        if (!chunkInClan || playerInClan) {
             return true;
         } else {
             return false;
