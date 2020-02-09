@@ -33,7 +33,7 @@ public class Event implements Listener {
 
     @EventHandler
     public void onPutBlock(BlockPlaceEvent blockPlaceEvent) {
-        if (!getResultOnEvent(blockPlaceEvent.getPlayer())){
+        if (!getResultOnEvent(blockPlaceEvent.getPlayer())) {
             blockPlaceEvent.getPlayer().sendMessage(pluginLocalization.getCommandLocale().getOnClanEventOnPutBlockError());
             blockPlaceEvent.setCancelled(true);
         }
@@ -41,12 +41,13 @@ public class Event implements Listener {
 
     boolean getResultOnEvent(Player player) {
         var chunkNow = player.getLocation().getChunk();
-        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk() == chunkNow);
+        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ());
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
-                clan.getMemberList().stream().anyMatch(member -> member.getPlayer() == player));
-        if (chunkInClan && playerInClan || !chunkInClan && playerInClan || !chunkInClan)
+                clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
+        if (chunkInClan && playerInClan || !chunkInClan && playerInClan || !chunkInClan) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 }
