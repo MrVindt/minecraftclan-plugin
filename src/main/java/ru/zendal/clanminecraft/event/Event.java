@@ -39,7 +39,7 @@ public class Event implements Listener {
         }
     }
 
-    boolean getResultOnEvent(Player player) {
+    private boolean getResultOnEvent(Player player) {
         var chunkNow = player.getLocation().getChunk();
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ());
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
