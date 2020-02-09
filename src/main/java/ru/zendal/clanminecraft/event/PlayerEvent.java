@@ -25,7 +25,7 @@ public class PlayerEvent implements Listener {
 
     @EventHandler
     public void onBreakBlock(BlockBreakEvent blockBreakEvent) {
-        if (!getResultOnEvent(blockBreakEvent.getPlayer())) {
+        if (!getResultOnEvent(blockBreakEvent.getPlayer(), blockBreakEvent)) {
             blockBreakEvent.getPlayer().sendMessage(pluginLocalization.getCommandLocale().getOnClanEventOnBreakBlockError());
             blockBreakEvent.setCancelled(true);
         }
@@ -33,15 +33,17 @@ public class PlayerEvent implements Listener {
 
     @EventHandler
     public void onPutBlock(BlockPlaceEvent blockPlaceEvent) {
-        if (!getResultOnEvent(blockPlaceEvent.getPlayer())) {
+        if (!getResultOnEvent(blockPlaceEvent.getPlayer(), blockPlaceEvent)) {
             blockPlaceEvent.getPlayer().sendMessage(pluginLocalization.getCommandLocale().getOnClanEventOnPutBlockError());
             blockPlaceEvent.setCancelled(true);
         }
     }
 
-    private boolean getResultOnEvent(Player player) {
+    private boolean getResultOnEvent(Player player, Object obj) {
         var chunkNow = player.getLocation().getChunk();
-        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ());
+        var blockEvent = obj instanceof BlockPlaceEvent ? ((BlockPlaceEvent) obj) : ((BlockBreakEvent) obj);
+        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ()
+        || blockEvent.getBlock().getChunk() != chunkNow);
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
                 clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
         if (!chunkInClan || playerInClan) {
