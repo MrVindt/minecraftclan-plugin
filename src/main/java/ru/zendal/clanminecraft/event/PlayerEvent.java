@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import ru.zendal.clanminecraft.component.i18n.PluginLocalization;
 import ru.zendal.clanminecraft.сlan.ClanManager;
@@ -39,9 +40,8 @@ public class PlayerEvent implements Listener {
         }
     }
 
-    private boolean getResultOnEvent(Player player, Object obj) {
+    private boolean getResultOnEvent(Player player, BlockEvent blockEvent) {
         var chunkNow = player.getLocation().getChunk();
-        var blockEvent = obj instanceof BlockPlaceEvent ? ((BlockPlaceEvent) obj) : ((BlockBreakEvent) obj);
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ()
                 || blockEvent.getBlock().getChunk() != chunkNow);
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
