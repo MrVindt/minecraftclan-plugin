@@ -64,7 +64,7 @@ public final class ClanMinecraft extends JavaPlugin {
         return Guice.createInjector(
                 new GuiceConfiguration(this),
                 new PluginConfiguration(this),
-                new LanguageConfiguration(this, "ru_ru", "en_us")
+                new LanguageConfiguration(this)
         );
     }
 }

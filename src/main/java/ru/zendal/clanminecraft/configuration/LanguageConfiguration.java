@@ -21,14 +21,8 @@ public class LanguageConfiguration extends AbstractModule {
      */
     private final JavaPlugin javaPlugin;
 
-    /**
-     * Available locales
-     */
-    private final String[] availableLocales;
-
-    public LanguageConfiguration(JavaPlugin javaPlugin, String... locales) {
+    public LanguageConfiguration(JavaPlugin javaPlugin) {
         this.javaPlugin = javaPlugin;
-        this.availableLocales = locales;
     }
 
     @Override
