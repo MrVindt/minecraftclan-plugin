@@ -41,8 +41,9 @@ public class PlayerEvent implements Listener {
     }
 
     /**
+     * Check for permission interact player at chunk
      *
-     * @param player the current player
+     * @param player       the current player
      * @param chunkAtBlock the chunk that the player interacts with
      * @return {@code true} if player is member of plan else {@code false}
      */
