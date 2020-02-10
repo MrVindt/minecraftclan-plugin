@@ -1,6 +1,7 @@
 package ru.zendal.clanminecraft.configuration;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +13,6 @@ import java.io.IOException;
 
 /**
  * Guice configuration about language (locale) plugin
- * TODO Add support config.yml
  */
 public class LanguageConfiguration extends AbstractModule {
 
@@ -37,9 +37,10 @@ public class LanguageConfiguration extends AbstractModule {
     }
 
     @Provides
+    @Inject
     @Named("languageFile")
-    public PropertiesFile propertiesProvider() throws IOException {
-        return new PropertiesFile(javaPlugin.getResource("lang/" + "en_us" + ".properties"));
+    public PropertiesFile propertiesProvider(@Named("pluginLocale") String pluginLocale) throws IOException {
+        return new PropertiesFile(javaPlugin.getResource("lang/" + pluginLocale + ".properties"));
     }
 
 

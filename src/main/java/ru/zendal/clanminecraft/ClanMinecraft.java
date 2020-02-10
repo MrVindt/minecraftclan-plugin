@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import ru.zendal.clanminecraft.command.CommandClan;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
+import ru.zendal.clanminecraft.configuration.PluginConfiguration;
 import ru.zendal.clanminecraft.event.PlayerEvent;
 
 import java.io.File;
@@ -62,6 +63,7 @@ public final class ClanMinecraft extends JavaPlugin {
     private Injector createDefaultInjector() {
         return Guice.createInjector(
                 new GuiceConfiguration(this),
+                new PluginConfiguration(this),
                 new LanguageConfiguration(this, "ru_ru", "en_us")
         );
     }
