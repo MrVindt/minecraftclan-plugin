@@ -25,5 +25,9 @@ public class Clan {
      * List of member
      */
     private List<Member> memberList;
+    /**
+     * List of purchased chunks
+     */
+    private List<Chunk> listPurchasedChunks;
 
 }

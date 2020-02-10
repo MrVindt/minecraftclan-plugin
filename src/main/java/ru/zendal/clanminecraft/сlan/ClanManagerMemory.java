@@ -30,7 +30,7 @@ public class ClanManagerMemory implements ClanManager {
                 List.of(
                         Member.builder().role(RoleMember.ADMIN).player(player).build()
                 )
-        ).build();
+        ).listPurchasedChunks(List.of(mainChunk)).build();
         this.listClan.add(clan);
     }
 
