@@ -40,4 +40,25 @@ public interface CommandLocalization {
      * @return local message
      */
     String getOnClanCreateErrorChunkIsBusy();
+
+    /**
+     * Get message that player is the admin of another clan
+     *
+     * @return local message
+     */
+    String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan);
+
+    /**
+     * Get message that you can't break blocks because you are not a member of a clan
+     *
+     * @return Local message
+     */
+    String getOnClanEventOnBreakBlockError();
+
+    /**
+     * Get message that you can't put blocks because you are not a member of a clan
+     *
+     * @return Local message
+     */
+    String getOnClanEventOnPutBlockError();
 }

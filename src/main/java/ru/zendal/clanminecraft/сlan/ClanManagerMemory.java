@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;
+import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,17 @@ public class ClanManagerMemory implements ClanManager {
         if (!this.checkUniqueNameClan(nameClan)) {
             throw new IllegalNameClanIsExistException(nameClan + " is exist");
         }
-
         if (!this.checkChunk(mainChunk)) {
             throw new IllegalChunkClanException("Chunk is busy with another clan");
         }
+        if (this.checkPlayerAdminAnotherClan(player)) {
+            throw new IllegalPlayerAdminAnotherClanException("The player is the admin of another clan");
+        }
+    }
+
+    private boolean checkPlayerAdminAnotherClan(Player player) {
+        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
+                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
     }
 
     private boolean checkUniqueNameClan(String nameClan) {

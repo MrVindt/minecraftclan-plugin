@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import ru.zendal.clanminecraft.command.CommandClan;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
+import ru.zendal.clanminecraft.event.PlayerEvent;
 
 import java.io.File;
 
@@ -45,6 +46,7 @@ public final class ClanMinecraft extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("clan").setExecutor(this.injector.getInstance(CommandClan.class));
+        this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerEvent.class), this);
     }
 
     @Override
