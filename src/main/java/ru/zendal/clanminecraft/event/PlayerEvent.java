@@ -45,27 +45,14 @@ public class PlayerEvent implements Listener {
      *
      * @param player       the current player
      * @param chunkAtBlock the chunk that the player interacts with
-     * @return {@code true} if player is member of plan else {@code false}
+     * @return {@code true} if player is member of clan else {@code false}
      */
     private boolean checkPermissionForPlayerAtChuck(Player player, Chunk chunkAtBlock) {
-        var chunkNow = player.getLocation().getChunk();
-        var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan ->
-                this.equalsChuck(clan.getMainChunk(), chunkNow) || this.equalsChuck(chunkAtBlock, chunkNow)
-        );
-        var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
-                clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
-        return !chunkInClan || playerInClan;
+        if (!clanManager.getAllClans().stream().anyMatch(clan -> clan.getListPurchasedChunks().contains(chunkAtBlock)))
+            return true;
+        else
+            return clanManager.getAllClans().stream().anyMatch(clan -> clan.getListPurchasedChunks().contains(chunkAtBlock)
+                    && clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
     }
 
-    /**
-     * Comparing two chuck between self
-     *
-     * @param chunk        first chuck
-     * @param chunkAnother second chuck
-     * @return {@code true} if two chuck equals between self else {@code false}
-     */
-    private boolean equalsChuck(Chunk chunk, Chunk chunkAnother) {
-        return chunk.getX() == chunkAnother.getX() &&
-                chunk.getZ() == chunkAnother.getZ();
-    }
 }
