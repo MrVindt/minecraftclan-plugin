@@ -15,8 +15,8 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
  */
 public class PlayerEvent implements Listener {
 
-    public final ClanManager clanManager;
-    public final PluginLocalization pluginLocalization;
+    private final ClanManager clanManager;
+    private final PluginLocalization pluginLocalization;
 
     @Inject
     public PlayerEvent(ClanManager clanManager, PluginLocalization pluginLocalization) {
@@ -42,9 +42,9 @@ public class PlayerEvent implements Listener {
 
     /**
      *
-     * @param player
-     * @param chunkAtBlock
-     * @return
+     * @param player the current player
+     * @param chunkAtBlock the chunk that the player interacts with
+     * @return {@code true} if player is member of plan else {@code false}
      */
     private boolean checkPermissionForPlayerAtChuck(Player player, Chunk chunkAtBlock) {
         var chunkNow = player.getLocation().getChunk();
