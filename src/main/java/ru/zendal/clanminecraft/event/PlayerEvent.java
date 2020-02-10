@@ -43,13 +43,9 @@ public class PlayerEvent implements Listener {
         var chunkNow = player.getLocation().getChunk();
         var blockEvent = obj instanceof BlockPlaceEvent ? ((BlockPlaceEvent) obj) : ((BlockBreakEvent) obj);
         var chunkInClan = clanManager.getAllClans().stream().anyMatch(clan -> clan.getMainChunk().getX() == chunkNow.getX() && clan.getMainChunk().getZ() == chunkNow.getZ()
-        || blockEvent.getBlock().getChunk() != chunkNow);
+                || blockEvent.getBlock().getChunk() != chunkNow);
         var playerInClan = clanManager.getAllClans().stream().anyMatch(clan ->
                 clan.getMemberList().stream().anyMatch(member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
-        if (!chunkInClan || playerInClan) {
-            return true;
-        } else {
-            return false;
-        }
+        return !chunkInClan || playerInClan;
     }
 }

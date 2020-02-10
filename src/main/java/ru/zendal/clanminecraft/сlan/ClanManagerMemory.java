@@ -45,13 +45,14 @@ public class ClanManagerMemory implements ClanManager {
         if (!this.checkChunk(mainChunk)) {
             throw new IllegalChunkClanException("Chunk is busy with another clan");
         }
-        if (this.checkPlayerAdminAnotherClan(player)){
+        if (this.checkPlayerAdminAnotherClan(player)) {
             throw new IllegalPlayerAdminAnotherClanException("The player is the admin of another clan");
         }
     }
 
-    private boolean checkPlayerAdminAnotherClan(Player player){
-        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(member -> member.getPlayer() == player));
+    private boolean checkPlayerAdminAnotherClan(Player player) {
+        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
+                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
     }
 
     private boolean checkUniqueNameClan(String nameClan) {
