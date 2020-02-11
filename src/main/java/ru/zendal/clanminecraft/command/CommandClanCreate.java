@@ -15,31 +15,30 @@ import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanExce
 import java.util.stream.Collectors;
 
 
-public class CommandClan implements CommandExecutor {
+public class CommandClanCreate implements CommandExecutor {
 
     private final ClanManager clanManager;
     private final PluginLocalization pluginLocalization;
 
 
     @Inject
-    public CommandClan(PluginLocalization pluginLocalization, ClanManager clanManager) {
+    public CommandClanCreate(PluginLocalization pluginLocalization, ClanManager clanManager) {
         this.pluginLocalization = pluginLocalization;
         this.clanManager = clanManager;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 2 && command.getName().equalsIgnoreCase("clan") && args[0].equalsIgnoreCase("create")) {
+        if (args.length == 1 && command.getName().equalsIgnoreCase("clan.create")) {
             var player = sender instanceof Player ? ((Player) sender) : null;
             var chunk = player.getLocation().getChunk();
-
             try {
-                clanManager.create(args[1], chunk, player);
-                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess(args[1]));
+                clanManager.create(args[0], chunk, player);
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateSuccess(args[0]));
             } catch (IllegalNameClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanError());
             } catch (IllegalNameClanIsExistException e) {
-                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanIsExist(args[1]));
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateNameClanIsExist(args[0]));
             } catch (IllegalChunkClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanCreateErrorChunkIsBusy());
             } catch (IllegalPlayerAdminAnotherClanException e) {

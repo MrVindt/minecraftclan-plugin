@@ -25,7 +25,7 @@ public class ClanManagerMemory implements ClanManager {
 
     @Override
     public void create(String nameClan, Chunk mainChunk, Player player) {
-        this.validate(nameClan, mainChunk, player);
+        this.validateCreate(nameClan, mainChunk, player);
         Clan clan = Clan.builder().name(nameClan).mainChunk(mainChunk).memberList(
                 List.of(
                         Member.builder().role(RoleMember.ADMIN).player(player).build()
@@ -34,8 +34,30 @@ public class ClanManagerMemory implements ClanManager {
         this.listClan.add(clan);
     }
 
+    @Override
+    public void addChunk(Chunk chunk, Player player) {
+        validateAddChunk(chunk, player);
+    }
 
-    private void validate(String nameClan, Chunk mainChunk, Player player) {
+    private void validateAddChunk(Chunk chunk, Player player){
+        if (this.checkChunkInClan(chunk)){
+            throw new IllegalChunkClanException("Chunk is busy with another clan");
+        }
+        if (this.checkPlayerInClan(player)){
+            //throw new
+        }
+    }
+
+    private boolean checkChunkInClan(Chunk chunk){
+        return this.listClan.stream().anyMatch(clan -> clan.getListPurchasedChunks().contains(chunk));
+    }
+
+   private boolean checkPlayerInClan(Player player){
+        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
+                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
+   }
+
+    private void validateCreate(String nameClan, Chunk mainChunk, Player player) {
         if (nameClan.length() < 3 || nameClan.length() > 20) {
             throw new IllegalNameClanException("Name must be unique and length more 2 and less 3");
         }
@@ -52,7 +74,7 @@ public class ClanManagerMemory implements ClanManager {
 
     private boolean checkPlayerAdminAnotherClan(Player player) {
         return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
-                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
+                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId()) && member.getRole().equals(RoleMember.ADMIN)));
     }
 
     private boolean checkUniqueNameClan(String nameClan) {

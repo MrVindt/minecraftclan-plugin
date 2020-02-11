@@ -5,7 +5,8 @@ import com.google.inject.Injector;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import ru.zendal.clanminecraft.command.CommandClan;
+import ru.zendal.clanminecraft.command.CommandClanAddChunk;
+import ru.zendal.clanminecraft.command.CommandClanCreate;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
 import ru.zendal.clanminecraft.configuration.PluginConfiguration;
@@ -46,7 +47,8 @@ public final class ClanMinecraft extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getCommand("clan").setExecutor(this.injector.getInstance(CommandClan.class));
+        this.getCommand("clan.create").setExecutor(this.injector.getInstance(CommandClanCreate.class));
+        this.getCommand("clan.add.chunk").setExecutor(this.injector.getInstance(CommandClanAddChunk.class));
         this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerEvent.class), this);
     }
 
