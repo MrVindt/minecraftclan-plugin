@@ -38,8 +38,13 @@ public class ClanManagerMemory implements ClanManager {
     @Override
     public void addChunk(Chunk chunk, Player player) {
         validateAddChunk(chunk, player);
-        this.listClan.stream().filter(clan -> clan.getName().equals(this.checkChunkClanNearby(chunk, player)))
-                .map(clan -> clan.getListPurchasedChunks().add(chunk));
+        List<Chunk> listPurchasedChunks;
+        listPurchasedChunks = this.listClan.stream().filter(clan -> clan.getName().equals(
+                this.checkChunkClanNearby(chunk, player))).flatMap(clan -> clan.getListPurchasedChunks().stream()).collect(Collectors.toList());
+        listPurchasedChunks.add(chunk);
+        this.listClan.stream().filter(clan -> clan.getName().equals(this.checkChunkClanNearby(chunk, player))).forEach(
+                clan -> clan.setListPurchasedChunks(listPurchasedChunks));
+        player.sendMessage(this.listClan.toString());
     }
 
     private void validateAddChunk(Chunk chunk, Player player) {
