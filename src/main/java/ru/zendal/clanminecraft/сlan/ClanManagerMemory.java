@@ -10,6 +10,7 @@ import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanExce
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implement of Clan Manager
@@ -37,25 +38,35 @@ public class ClanManagerMemory implements ClanManager {
     @Override
     public void addChunk(Chunk chunk, Player player) {
         validateAddChunk(chunk, player);
+        this.listClan.stream().filter(clan -> clan.getName().equals(this.checkChunkClanNearby(chunk, player)))
+                .map(clan -> clan.getListPurchasedChunks().add(chunk));
     }
 
-    private void validateAddChunk(Chunk chunk, Player player){
-        if (this.checkChunkInClan(chunk)){
-            throw new IllegalChunkClanException("Chunk is busy with another clan");
+    private void validateAddChunk(Chunk chunk, Player player) {
+        if (this.checkChunkClanNearby(chunk, player).isEmpty()) {
+            player.sendMessage("Nearby there are no chunks with the clan to expand the area");
         }
-        if (this.checkPlayerInClan(player)){
-            //throw new
+        if (!this.checkBelongPlayerToClan(this.checkChunkClanNearby(chunk, player), player)) {
+            player.sendMessage("You can't add a chunk to a clan because you're not a member of a clan");
         }
     }
 
-    private boolean checkChunkInClan(Chunk chunk){
-        return this.listClan.stream().anyMatch(clan -> clan.getListPurchasedChunks().contains(chunk));
-    }
-
-   private boolean checkPlayerInClan(Player player){
-        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
+    private boolean checkBelongPlayerToClan(String nameClan, Player player) {
+        return this.listClan.stream().anyMatch(clan -> clan.getName().equals(nameClan) && clan.getMemberList().stream().anyMatch(
                 member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())));
-   }
+    }
+
+    private String checkChunkClanNearby(Chunk chunk, Player player) {
+        var x = chunk.getX();
+        var z = chunk.getZ();
+        var world = player.getWorld();
+        return this.listClan.stream().filter(clan -> clan.getListPurchasedChunks().contains(world.getChunkAt(x, z + 1))
+                || clan.getListPurchasedChunks().contains(world.getChunkAt(x, z - 1))
+                || clan.getListPurchasedChunks().contains(world.getChunkAt(x + 1, z))
+                || clan.getListPurchasedChunks().contains(world.getChunkAt(x - 1, z))).map(clan -> clan.getName())
+                .collect(Collectors.toList()).toString().replace("[", "").replace("]", "");
+
+    }
 
     private void validateCreate(String nameClan, Chunk mainChunk, Player player) {
         if (nameClan.length() < 3 || nameClan.length() > 20) {
