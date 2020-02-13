@@ -75,6 +75,31 @@ public class PluginLocalizationImpl implements PluginLocalization {
             public String getOnClanEventOnPutBlockError() {
                 return languagePropertiesFile.get("clan.event.onPutBlock.error");
             }
+
+            @Override
+            public String getOnClanAddChunkSuccess(){
+                return languagePropertiesFile.get("command.clan.add.chunk.successful");
+            }
+
+            @Override
+            public String getOnClanAddChunkError(){
+                return languagePropertiesFile.get("command.clan.add.chunk.error");
+            }
+
+            @Override
+            public String getOnClanAddChunkErrorNoChunkNearby(){
+                return languagePropertiesFile.get("command.clan.add.chunk.error.noChunkNearby");
+            }
+
+            @Override
+            public String getOnClanAddChunkErrorPlayerNotMemberClan(){
+                return languagePropertiesFile.get("command.clan.add.chunk.error.playerNotMemberClan");
+            }
+
+            @Override
+            public String getOnClanAddChunkErrorChunkToClan(){
+                return languagePropertiesFile.get("command.clan.add.chunk.error.chunkToClan");
+            }
         };
     }
 

@@ -3,10 +3,7 @@ package ru.zendal.clanminecraft.сlan;
 import com.google.inject.Singleton;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
-import ru.zendal.clanminecraft.сlan.exception.IllegalChunkClanException;
-import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanException;
-import ru.zendal.clanminecraft.сlan.exception.IllegalNameClanIsExistException;
-import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerAdminAnotherClanException;
+import ru.zendal.clanminecraft.сlan.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +35,27 @@ public class ClanManagerMemory implements ClanManager {
     @Override
     public void addChunk(Chunk chunk, Player player) {
         validateAddChunk(chunk, player);
-        List<Chunk> listPurchasedChunks;
-        listPurchasedChunks = this.listClan.stream().filter(clan -> clan.getName().equals(
+        var listPurchasedChunks = this.listClan.stream().filter(clan -> clan.getName().equals(
                 this.checkChunkClanNearby(chunk, player))).flatMap(clan -> clan.getListPurchasedChunks().stream()).collect(Collectors.toList());
         listPurchasedChunks.add(chunk);
         this.listClan.stream().filter(clan -> clan.getName().equals(this.checkChunkClanNearby(chunk, player))).forEach(
                 clan -> clan.setListPurchasedChunks(listPurchasedChunks));
-        player.sendMessage(this.listClan.toString());
     }
 
     private void validateAddChunk(Chunk chunk, Player player) {
         if (this.checkChunkClanNearby(chunk, player).isEmpty()) {
-            player.sendMessage("Nearby there are no chunks with the clan to expand the area");
+            throw new IllegalChunkNearbyException("Nearby there are no chunks with the clan to expand the area");
         }
         if (!this.checkBelongPlayerToClan(this.checkChunkClanNearby(chunk, player), player)) {
-            player.sendMessage("You can't add a chunk to a clan because you're not a member of a clan");
+            throw new IllegalPlayerNotMemberClanException("You can't add a chunk to a clan because you're not a member of a clan");
         }
+        if (this.checkChunkToClan(chunk)){
+            throw new IllegalChunkToClanException("The chunk has already been added to the clan");
+        }
+    }
+
+    private boolean checkChunkToClan(Chunk chunk){
+        return this.listClan.stream().anyMatch(clan -> clan.getListPurchasedChunks().contains(chunk));
     }
 
     private boolean checkBelongPlayerToClan(String nameClan, Player player) {
