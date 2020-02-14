@@ -14,13 +14,18 @@ import java.io.IOException;
 /**
  * Guice configuration about language (locale) plugin
  */
-public class LanguageConfiguration extends AbstractModule {
+public final class LanguageConfiguration extends AbstractModule {
 
     /**
      * Instance of java plugin
      */
     private final JavaPlugin javaPlugin;
 
+    /**
+     * Constructor
+     *
+     * @param javaPlugin instance of java plugin
+     */
     public LanguageConfiguration(JavaPlugin javaPlugin) {
         this.javaPlugin = javaPlugin;
     }
