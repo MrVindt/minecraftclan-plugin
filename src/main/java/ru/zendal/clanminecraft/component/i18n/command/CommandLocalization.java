@@ -96,4 +96,11 @@ public interface CommandLocalization {
      * @return local message
      */
     String getOnClanAddChunkErrorChunkToClan();
+
+    /**
+     * Get message about chunk can't add to clan because allowed area of the clan has been exceeded!
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkErrorValidAreaClan();
 }

@@ -10,6 +10,7 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkNearbyException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalChunkToClanException;
 import ru.zendal.clanminecraft.сlan.exception.IllegalPlayerNotMemberClanException;
+import ru.zendal.clanminecraft.сlan.exception.IllegalValidAreaClanException;
 
 public class CommandClanAddChunk implements CommandExecutor {
 
@@ -17,25 +18,27 @@ public class CommandClanAddChunk implements CommandExecutor {
     private final PluginLocalization pluginLocalization;
 
     @Inject
-    public CommandClanAddChunk(ClanManager clanManager, PluginLocalization pluginLocalization){
+    public CommandClanAddChunk(ClanManager clanManager, PluginLocalization pluginLocalization) {
         this.clanManager = clanManager;
         this.pluginLocalization = pluginLocalization;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("clan.add.chunk")){
+        if (command.getName().equalsIgnoreCase("clan.add.chunk")) {
             var player = sender instanceof Player ? ((Player) sender) : null;
             var chunk = player.getLocation().getChunk();
-            try{
+            try {
                 clanManager.addChunk(chunk, player);
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanAddChunkSuccess());
-            } catch (IllegalChunkNearbyException e){
+            } catch (IllegalChunkNearbyException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanAddChunkErrorNoChunkNearby());
-            } catch (IllegalPlayerNotMemberClanException e){
+            } catch (IllegalPlayerNotMemberClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanAddChunkErrorPlayerNotMemberClan());
-            } catch (IllegalChunkToClanException e){
+            } catch (IllegalChunkToClanException e) {
                 sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanAddChunkErrorChunkToClan());
+            } catch (IllegalValidAreaClanException e) {
+                sender.sendMessage(pluginLocalization.getCommandLocale().getOnClanAddChunkErrorValidAreaClan());
             }
             return true;
         }

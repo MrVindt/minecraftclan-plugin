@@ -61,7 +61,7 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
 
             @Override
-            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan){
+            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan) {
                 return languagePropertiesFile.get("command.clan.create.error.playerIsAdminAnotherClan")
                         .replaceAll("\\{CLAN_NAME}", nameClan);
             }
@@ -77,28 +77,33 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
 
             @Override
-            public String getOnClanAddChunkSuccess(){
+            public String getOnClanAddChunkSuccess() {
                 return languagePropertiesFile.get("command.clan.add.chunk.successful");
             }
 
             @Override
-            public String getOnClanAddChunkError(){
+            public String getOnClanAddChunkError() {
                 return languagePropertiesFile.get("command.clan.add.chunk.error");
             }
 
             @Override
-            public String getOnClanAddChunkErrorNoChunkNearby(){
+            public String getOnClanAddChunkErrorNoChunkNearby() {
                 return languagePropertiesFile.get("command.clan.add.chunk.error.noChunkNearby");
             }
 
             @Override
-            public String getOnClanAddChunkErrorPlayerNotMemberClan(){
+            public String getOnClanAddChunkErrorPlayerNotMemberClan() {
                 return languagePropertiesFile.get("command.clan.add.chunk.error.playerNotMemberClan");
             }
 
             @Override
-            public String getOnClanAddChunkErrorChunkToClan(){
+            public String getOnClanAddChunkErrorChunkToClan() {
                 return languagePropertiesFile.get("command.clan.add.chunk.error.chunkToClan");
+            }
+
+            @Override
+            public String getOnClanAddChunkErrorValidAreaClan() {
+                return languagePropertiesFile.get("command.clan.add.chunk.error.validAreaClan");
             }
         };
     }
