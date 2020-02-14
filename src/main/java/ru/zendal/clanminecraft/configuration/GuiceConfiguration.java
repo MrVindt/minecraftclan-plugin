@@ -3,15 +3,17 @@ package ru.zendal.clanminecraft.configuration;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.zendal.clanminecraft.component.logger.PluginLogger;
+import ru.zendal.clanminecraft.component.logger.SimplePluginLoggerImpl;
+import ru.zendal.clanminecraft.component.scheduler.BukkitScheduler;
+import ru.zendal.clanminecraft.component.scheduler.Scheduler;
 import ru.zendal.clanminecraft.сlan.ClanManager;
 import ru.zendal.clanminecraft.сlan.ClanManagerMemory;
-import ru.zendal.clanminecraft.component.logger.SimplePluginLoggerImpl;
-import ru.zendal.clanminecraft.component.logger.PluginLogger;
 
 /**
  * Configuration file of Guice
  */
-public class GuiceConfiguration extends AbstractModule {
+public final class GuiceConfiguration extends AbstractModule {
 
     /**
      * Instance of JavaPlugin
@@ -30,6 +32,7 @@ public class GuiceConfiguration extends AbstractModule {
     @Override
     protected void configure() {
         bind(ClanManager.class).to(ClanManagerMemory.class);
+        bind(Scheduler.class).to(BukkitScheduler.class);
     }
 
     @Provides

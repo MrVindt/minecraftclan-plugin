@@ -36,6 +36,9 @@ public class PropertiesFile {
      */
     private void prepareList(List<String> lines) throws IOException {
         for (String line : lines) {
+            if (line.startsWith("#") || line.length() <= 1) {
+                continue;
+            }
             String[] preparedLine = line.split("=", 2);
             if (preparedLine.length != 2) {
                 throw new IOException("Invalid line: " + line);

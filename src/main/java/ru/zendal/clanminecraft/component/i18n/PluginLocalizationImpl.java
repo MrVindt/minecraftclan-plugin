@@ -3,12 +3,13 @@ package ru.zendal.clanminecraft.component.i18n;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import ru.zendal.clanminecraft.component.i18n.command.CommandLocalization;
+import ru.zendal.clanminecraft.component.i18n.title.TitleLocalization;
 import ru.zendal.clanminecraft.utils.PropertiesFile;
 
 /**
  * Simple implements of plugin localization
  */
-public class PluginLocalizationImpl implements PluginLocalization {
+public final class PluginLocalizationImpl implements PluginLocalization {
 
     /**
      * Source of localization
@@ -20,10 +21,43 @@ public class PluginLocalizationImpl implements PluginLocalization {
      */
     private final CommandLocalization commandLocalization;
 
+    /**
+     * Title localization instance
+     */
+    private final TitleLocalization titleLocalization;
+
+
     @Inject
     public PluginLocalizationImpl(@Named("languageFile") PropertiesFile languagePropertiesFile) {
         this.languagePropertiesFile = languagePropertiesFile;
         this.commandLocalization = this.initializeLocalization();
+        this.titleLocalization = this.initializeTitleLocalization();
+    }
+
+    private TitleLocalization initializeTitleLocalization() {
+        return new TitleLocalization() {
+            @Override
+            public String getOnEntryClanTerritory(String nameClan) {
+                return languagePropertiesFile.get("title.clan.entry")
+                        .replaceAll("\\{CLAN_NAME}", nameClan);
+            }
+
+            @Override
+            public String getSubOnEntryClanTerritory() {
+                return languagePropertiesFile.get("title.clan.entry.sub");
+            }
+
+            @Override
+            public String getOnExitClanTerritory(String nameClan) {
+                return languagePropertiesFile.get("title.clan.exit")
+                        .replaceAll("\\{CLAN_NAME}", nameClan);
+            }
+
+            @Override
+            public String getSubExitEntryClanTerritory() {
+                return languagePropertiesFile.get("title.clan.exit.sub");
+            }
+        };
     }
 
     /**
@@ -61,7 +95,7 @@ public class PluginLocalizationImpl implements PluginLocalization {
             }
 
             @Override
-            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan){
+            public String getOnClanCreateErrorPlayerIsAdminAnotherClan(String nameClan) {
                 return languagePropertiesFile.get("command.clan.create.error.playerIsAdminAnotherClan")
                         .replaceAll("\\{CLAN_NAME}", nameClan);
             }
@@ -81,5 +115,10 @@ public class PluginLocalizationImpl implements PluginLocalization {
     @Override
     public CommandLocalization getCommandLocale() {
         return this.commandLocalization;
+    }
+
+    @Override
+    public TitleLocalization getTitleLocalization() {
+        return this.titleLocalization;
     }
 }
