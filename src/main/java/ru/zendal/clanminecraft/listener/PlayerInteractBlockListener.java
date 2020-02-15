@@ -1,4 +1,4 @@
-package ru.zendal.clanminecraft.event;
+package ru.zendal.clanminecraft.listener;
 
 import com.google.inject.Inject;
 import org.bukkit.Chunk;
@@ -13,13 +13,13 @@ import ru.zendal.clanminecraft.сlan.ClanManager;
 /**
  * Events of the player
  */
-public class PlayerEvent implements Listener {
+public final class PlayerInteractBlockListener implements Listener {
 
     private final ClanManager clanManager;
     private final PluginLocalization pluginLocalization;
 
     @Inject
-    public PlayerEvent(ClanManager clanManager, PluginLocalization pluginLocalization) {
+    public PlayerInteractBlockListener(ClanManager clanManager, PluginLocalization pluginLocalization) {
         this.clanManager = clanManager;
         this.pluginLocalization = pluginLocalization;
     }

@@ -10,7 +10,7 @@ import ru.zendal.clanminecraft.configuration.CommandHandlerConfiguration;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
 import ru.zendal.clanminecraft.configuration.PluginConfiguration;
-import ru.zendal.clanminecraft.event.PlayerEvent;
+import ru.zendal.clanminecraft.listener.PlayerInteractBlockListener;
 import ru.zendal.clanminecraft.listener.PlayerLocationListener;
 import ru.zendal.clanminecraft.listener.PlayerLocationOnClanTerritoryListener;
 
@@ -50,7 +50,7 @@ public final class ClanMinecraft extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("clan").setExecutor(this.injector.getInstance(CommandClan.class));
-        this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerEvent.class), this);
+        this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerInteractBlockListener.class), this);
         this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerLocationOnClanTerritoryListener.class), this);
         this.getServer().getPluginManager().registerEvents(this.injector.getInstance(PlayerLocationListener.class), this);
     }
