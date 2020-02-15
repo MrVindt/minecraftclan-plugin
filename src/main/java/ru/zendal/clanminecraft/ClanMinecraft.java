@@ -6,6 +6,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import ru.zendal.clanminecraft.command.CommandClan;
+import ru.zendal.clanminecraft.configuration.CommandHandlerConfiguration;
 import ru.zendal.clanminecraft.configuration.GuiceConfiguration;
 import ru.zendal.clanminecraft.configuration.LanguageConfiguration;
 import ru.zendal.clanminecraft.configuration.PluginConfiguration;
@@ -68,7 +69,8 @@ public final class ClanMinecraft extends JavaPlugin {
         return Guice.createInjector(
                 new GuiceConfiguration(this),
                 new PluginConfiguration(this),
-                new LanguageConfiguration(this)
+                new LanguageConfiguration(this),
+                new CommandHandlerConfiguration()
         );
     }
 }

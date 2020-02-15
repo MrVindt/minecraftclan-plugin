@@ -22,6 +22,14 @@ public interface ClanManager {
     void create(String nameClan, Chunk mainChunk, Player player);
 
     /**
+     * Add chunk in clan
+     *
+     * @param chunk  The chunk that the player is currently in
+     * @param player The current player
+     */
+    void addChunk(Chunk chunk, Player player);
+
+    /**
      * Get all Clan
      *
      * @return List of Clans

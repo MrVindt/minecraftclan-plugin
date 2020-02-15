@@ -51,14 +51,56 @@ public interface CommandLocalization {
     /**
      * Get message that you can't break blocks because you are not a member of a clan
      *
-     * @return Local message
+     * @return local message
      */
     String getOnClanEventOnBreakBlockError();
 
     /**
      * Get message that you can't put blocks because you are not a member of a clan
      *
-     * @return Local message
+     * @return local message
      */
     String getOnClanEventOnPutBlockError();
+
+    /**
+     * Get message about chunk added to the clan
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkSuccess();
+
+    /**
+     * Get message about incorrectly entered command
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkError();
+
+    /**
+     * Get message about nearby there are no chunks with the clan
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkErrorNoChunkNearby();
+
+    /**
+     * Get message about player a not member of clan
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkErrorPlayerNotMemberClan();
+
+    /**
+     * Get message about chunk has already been added to the clan
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkErrorChunkToClan();
+
+    /**
+     * Get message about chunk can't add to clan because allowed area of the clan has been exceeded!
+     *
+     * @return local message
+     */
+    String getOnClanAddChunkErrorValidAreaClan();
 }
