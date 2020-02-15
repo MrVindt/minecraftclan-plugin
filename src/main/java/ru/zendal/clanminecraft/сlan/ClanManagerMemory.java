@@ -7,6 +7,7 @@ import ru.zendal.clanminecraft.сlan.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -99,19 +100,24 @@ public class ClanManagerMemory implements ClanManager {
             throw new IllegalNameClanException("Name must be unique and length more 2 and less 3");
         }
         if (!this.checkUniqueNameClan(nameClan)) {
+            System.out.println("TET");
             throw new IllegalNameClanIsExistException(nameClan + " is exist");
         }
         if (!this.checkChunk(mainChunk)) {
             throw new IllegalChunkClanException("Chunk is busy with another clan");
         }
-        if (this.checkPlayerAdminAnotherClan(player)) {
-            throw new IllegalPlayerAdminAnotherClanException("The player is the admin of another clan");
+        var optionalClan = this.checkPlayerAdminAnotherClan(player);
+        if (optionalClan.isPresent()) {
+            throw new IllegalPlayerAdminAnotherClanException("The player is the admin of another clan", optionalClan.get());
         }
     }
 
-    private boolean checkPlayerAdminAnotherClan(Player player) {
-        return this.listClan.stream().anyMatch(clan -> clan.getMemberList().stream().anyMatch(
-                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId()) && member.getRole().equals(RoleMember.ADMIN)));
+    private Optional<Clan> checkPlayerAdminAnotherClan(Player player) {
+        return this.listClan.stream().filter(
+                clan -> clan.getMemberList().stream().anyMatch(
+                        member -> member.getPlayer().getUniqueId().equals(player.getUniqueId()) && member.getRole() == RoleMember.ADMIN
+                )
+        ).findFirst();
     }
 
     private boolean checkUniqueNameClan(String nameClan) {

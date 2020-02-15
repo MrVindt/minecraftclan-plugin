@@ -3,7 +3,7 @@ version: @version@
 main: ru.zendal.clanminecraft.ClanMinecraft
 api-version: 1.13
 commands:
-  clan.create:
+  clan:
     description: create clan
     usage: command execution error
   clan.add.chunk:
