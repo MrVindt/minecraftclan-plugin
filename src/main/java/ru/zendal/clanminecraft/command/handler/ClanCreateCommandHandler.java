@@ -24,7 +24,9 @@ public class ClanCreateCommandHandler implements CommandHandler {
 
     @Override
     public boolean canProcess(String[] args) {
-        return args.length == 2;
+        if (args[0].equalsIgnoreCase("create"))
+            return true;
+        return false;
     }
 
     @Override

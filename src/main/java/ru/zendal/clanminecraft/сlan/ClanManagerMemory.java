@@ -41,24 +41,25 @@ public class ClanManagerMemory implements ClanManager {
         listPurchasedChunks.add(chunk);
         this.listClan.stream().filter(clan -> clan.getName().equals(nameClan)).forEach(
                 clan -> clan.setListPurchasedChunks(listPurchasedChunks));
+        player.sendMessage(listClan.toString());
     }
 
     private String validateAddChunk(Chunk chunk, Player player) {
         var nameClanPlayer = this.checkBelongPlayerToClan(player);
         if (nameClanPlayer.isEmpty()) {
-            throw new IllegalPlayerNotMemberClanException("You can't add a chunk to a clan because you're not a member of a clan");
+            throw new IllegalPlayerNotMemberClanException("You can't add a chunk to a clan because you're not a member of a clan and you're not admin of clan");
         }
-        var nameClan = this.checkChunkClanNearby(chunk, player, nameClanPlayer);
+        var nameClan = this.checkChunkClanNearby(chunk, player, nameClanPlayer.get());
         if (nameClan.isEmpty()) {
             throw new IllegalChunkNearbyException("Nearby there are no chunks with the clan to expand the area");
         }
-        if (checkValidAreaClan(chunk, nameClanPlayer)) {
+        if (checkValidAreaClan(chunk, nameClanPlayer.get())) {
             throw new IllegalValidAreaClanException("You can't add a chunk to a clan because he allowed area of the clan has been exceeded");
         }
-        if (this.checkChunkToClan(chunk, nameClanPlayer)) {
+        if (this.checkChunkToClan(chunk, nameClanPlayer.get())) {
             throw new IllegalChunkToClanException("The chunk has already been added to the clan");
         }
-        return nameClan;
+        return nameClanPlayer.get();
     }
 
     private boolean checkValidAreaClan(Chunk chunk, String nameClanPlayer) {
@@ -77,21 +78,20 @@ public class ClanManagerMemory implements ClanManager {
         return this.listClan.stream().anyMatch(clan -> clan.getName().equals(nameClanPlayer) && clan.getListPurchasedChunks().contains(chunk));
     }
 
-    private String checkBelongPlayerToClan(Player player) {
+    private Optional<String> checkBelongPlayerToClan(Player player) {
         return this.listClan.stream().filter(clan -> clan.getMemberList().stream().anyMatch(
-                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId()))).map(clan -> clan.getName()).collect(
-                Collectors.toList()).toString().replace("[", "").replace("]", "");
+                member -> member.getPlayer().getUniqueId().equals(player.getUniqueId())))
+                .map(clan -> clan.getName()).findFirst();
     }
 
-    private String checkChunkClanNearby(Chunk chunk, Player player, String nameClanPlayer) {
+    private Optional<String> checkChunkClanNearby(Chunk chunk, Player player, String nameClanPlayer) {
         var x = chunk.getX();
         var z = chunk.getZ();
         var world = player.getWorld();
         return this.listClan.stream().filter(clan -> clan.getName().equals(nameClanPlayer) && clan.getListPurchasedChunks().contains(world.getChunkAt(x, z + 1))
                 || clan.getListPurchasedChunks().contains(world.getChunkAt(x, z - 1))
                 || clan.getListPurchasedChunks().contains(world.getChunkAt(x + 1, z))
-                || clan.getListPurchasedChunks().contains(world.getChunkAt(x - 1, z))).map(clan -> clan.getName())
-                .collect(Collectors.toList()).toString().replace("[", "").replace("]", "");
+                || clan.getListPurchasedChunks().contains(world.getChunkAt(x - 1, z))).map(clan -> clan.getName()).findFirst();
 
     }
 
@@ -100,7 +100,6 @@ public class ClanManagerMemory implements ClanManager {
             throw new IllegalNameClanException("Name must be unique and length more 2 and less 3");
         }
         if (!this.checkUniqueNameClan(nameClan)) {
-            System.out.println("TET");
             throw new IllegalNameClanIsExistException(nameClan + " is exist");
         }
         if (!this.checkChunk(mainChunk)) {

@@ -25,7 +25,7 @@ public class CommandClan implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         for (CommandHandler handler : this.handlers) {
-            if (handler.canProcess(args)) {
+            if (args.length != 0 && handler.canProcess(args)) {
                 return handler.run(sender, args);
             }
         }

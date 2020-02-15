@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
+import ru.zendal.clanminecraft.command.handler.ClanAddChunkCommand;
 import ru.zendal.clanminecraft.command.handler.ClanCreateCommandHandler;
 import ru.zendal.clanminecraft.command.handler.CommandHandler;
 
@@ -22,8 +23,8 @@ public class CommandHandlerConfiguration extends AbstractModule {
     @Inject
     public List<CommandHandler> providerCommandHandler(Injector injector) {
         return List.of(
-                injector.getInstance(ClanCreateCommandHandler.class)
-                // TODO injector.getInstance(ClanCreateCommandHandler.class),
+                injector.getInstance(ClanCreateCommandHandler.class),
+                injector.getInstance(ClanAddChunkCommand.class)
                 );
     }
 }

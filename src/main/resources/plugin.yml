@@ -4,8 +4,5 @@ main: ru.zendal.clanminecraft.ClanMinecraft
 api-version: 1.13
 commands:
   clan:
-    description: create clan
-    usage: command execution error
-  clan.add.chunk:
-    description: add chunk in clan
+    description: create clan or add chunk in clan
     usage: command execution error
